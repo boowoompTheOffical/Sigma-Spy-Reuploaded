@@ -8,7 +8,7 @@ If depthso is reading this, i hope your doing well, and if you want me to take t
 ```
 loadstring(
     game:HttpGet(
-        'https://raw.githubusercontent.com/europiummodmenutuff/Sigma-Spy-Reuploaded/refs/heads/main/Main.lua'
+        'https://raw.githubusercontent.com/boowoompTheOffical/Sigma-Spy-Reuploaded/refs/heads/main/Main.lua'
     ),
     'Sigma Spy'
 )()
