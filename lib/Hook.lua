@@ -14,6 +14,7 @@ local Process
 
 --// This is a custom hookmetamethod function, feel free to replace with your own
 --// The callback is expected to return a nil value sometimes which should be ingored
+--[[
 local function HookMetaMethod(self, Call: string, Callback: MetaCallback): MetaCallback
 	local OriginalFunc
 	OriginalFunc = hookmetamethod(self, Call, function(...)
@@ -29,30 +30,30 @@ local function HookMetaMethod(self, Call: string, Callback: MetaCallback): MetaC
 	end)
 	return OriginalFunc
 end
+--]]
 
 --// Replace metatable function method, this can be a workaround on some games if hookmetamethod is detected
---// To use this, just uncomment it and comment out the method above
---//
--- local function HookMetaMethod(self, Call: string, Callback: MetaCallback): MetaCallback
--- 	local Metatable = getrawmetatable(self)
--- 	local OriginalFunc = rawget(Metatable, Call)
+local function HookMetaMethod(self, Call: string, Callback: MetaCallback): MetaCallback
+	local Metatable = getrawmetatable(self)
+	local OriginalFunc = rawget(Metatable, Call)
 	
--- 	--// Replace function
--- 	setreadonly(Metatable, false)
--- 	rawset(Metatable, Call, function(...)
--- 		--// Invoke callback and check for a reponce otherwise ignored
--- 		local ReturnValues = Callback(...)
--- 		if ReturnValues then
--- 			local Length = table.maxn(ReturnValues)
--- 			return unpack(ReturnValues, 1, Length)
--- 		end
+	--// Replace function
+	setreadonly(Metatable, false)
+	rawset(Metatable, Call, function(...)
+		--// Invoke callback and check for a reponce otherwise ignored
+		local ReturnValues = Callback(...)
+		if ReturnValues then
+			local Length = table.maxn(ReturnValues)
+			return unpack(ReturnValues, 1, Length)
+		end
 
--- 		return OriginalFunc(...)
--- 	end)
--- 	setreadonly(Metatable, true)
+		return OriginalFunc(...)
+	end)
+	setreadonly(Metatable, true)
 
--- 	return OriginalFunc
--- end
+	return OriginalFunc
+end
+
 
 local function Merge(Base: table, New: table)
 	for Key, Value in next, New do
